@@ -1,0 +1,53 @@
+//Andrei Gabriel 323CB
+
+Tema2 PA - Grafuri
+
+1) Beamdrone :
+
+Am citit datele de intrare cu functia readInput, initializand astfel
+matricea labirint si dist ( dist[i][j] = distanta minima de la punctul sursa la (i,j))
+Am rezolvat problema cu un algoritm Dijkstra modificat :
+      Am initializat matricea visited (care semnifica daca punctul (i, j) a fost vizitat)
+      Se folosesc mai multe cozi: 'q' - coada care va stoca punctele
+                                  q_val - stocheaza valoarea pe care punctulo va primi
+                                  q_dir - directia pa care o are drona in punctul respectiv
+      Dar si coada care are o prioritate mai mare decat cea precedenta:
+                                  Hq - asemenea cu q, dar punctele din Hq vor fi tratate inaintea
+                                  celor din q.
+
+      Pentru punctul (x, y) se vor calcula vecinii (xn, yn). Pentru vecinii care sunt pe aceeasi 
+      directie cu (x,y), ii voi adauga in coada de prioritate mare (nu imi va pasa daca vecinul a
+      fost deja vizitat), urmand sa ii dau valoarea aceeasi cu dist[x][y]. Daca imi schimb directia,
+      ma voi uita la cei care nu au fost verificati sau sunt in curs de verificare( visited[xn][yn] == 2)
+      ii adaug in coada 'q' cu o valoare + 1 fata de cea anterioara.
+
+      Obs. Nu ma voi intoarce niciodata inapoi (cu 180 de grade)
+
+      Rezultatul va fi pe matricea de distanta pe pozitia destinatiei.
+2) Curatare :
+
+La inceput, se va citi datele asemanator ca la Beamdrone.
+Pentru fiecare robot am calculat matricea de distante minime 'dist' (cu algoritmul bfs) si am salvat 
+distantele de la robot la fiecare spatiu murdar intr-o structura de date. Asemanator pentru spatiile murdare,
+am salvat distanta catre spatiu spre celelalte spatii murdare.
+
+Astfel am obtinut un graf partial complet din spatiile murdare (cu costurile corespunzatoate), iar robotii vor avea 
+muchie catre fiecare nod (care reprezinta spatiu murdar).
+
+Deoarece avem un numar foarte mic de roboti si spatii, am decis sa utilizez algoritmul de backtracking pentru aflarea
+timpului minim.
+3) Fortificatii :
+
+Pentru fiecare sat invecinat cu unul barbar am aplicat algoritmul lui Dijkstra, pentru a afla drumul minim spre capitala.
+Am ordonat vectorul crescator si am construit fortificatii incepand cu drumurile cele mai scurte pana cand costul drumurilor
+s-a ridicat la cel urmator.
+
+exemplu pentru vectorul urmator:
+
+1 1 3 8 8 9
+  |
+  i  Se incearca aducerea costurilor cu indicii 0 .. i la costul cu indicele i+1
+
+Daca am suficiente fortificatii obtin:
+
+3 3 3 8 8 9
